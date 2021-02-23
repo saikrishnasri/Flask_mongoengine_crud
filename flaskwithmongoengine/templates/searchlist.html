@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>{{t}}</title>
+		<link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/style.css')}}" >
+	</head>
+<body>
+	<h1>{{h}}</h1>
+	<hr>
+	{% if db_variable[0] %}
+	<h3>Result of the Search :Search Information</h3>
+	<table>
+	    <tr id="row">
+	    	<td class="status">Status</td>
+	    	<td class="name">Enter name</td>
+	    	<td class="email">Enter email</td>
+	    	<td class="password">Enter password</td>
+	    	<td class="mobile">Enter mobile</td>
+	    	<td class="address">Enter address</td>
+		<td class="func">Delete</td>
+		<td class="func">Modify</td>
+	    </tr>
+		{% for register in db_variable %}
+		<tr class="datas">
+			<td><a href="./done?_id={{ register['_id'] }}"><input type="image" src="static/images/{{register['done']}}.png" alt="Submit ME"></a></td>
+			<td class="name">{{ register["name"] }}</td>
+			<td class="desc">{{ register["email"] }}</td>
+			<td class="date">{{ register["password"] }}</td>
+			<td class="pr">{{ register["mobile"] }}</td>
+			<td class="pr">{{ register["address"] }}</td>
+			<td class="func1"><a href="./remove?_id={{ register['_id'] }}"><button type="submit">DELETE</button></a></td>
+			<td class="func1"><a href="./update?_id={{ register['_id'] }}"><button type="submit">EDIT</button></a></td>
+		</tr>
+		{% endfor %}
+	{% else %}
+		<h4>No Result Found !!</h4>
+	{% endif %}
+	</table>
+	<a href="/">Return to Registeration Information</a>
+</body>
+</html>

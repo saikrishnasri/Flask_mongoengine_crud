@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>{{t}}</title>
+		<!-- href="/static/assets/style.css"-->
+		<link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/style.css')}}" >
+		<link rel="stylesheet" type="text/css"  href="{{ url_for('static',filename='assets/emoji.css')}}" >
+		<script src="{{ url_for('static',filename='assets/twemoji.min.js')}}"></script>  
+		<script src="{{ url_for('static',filename='assets/emoji.js')}}"></script>
+	</head>
+<body>
+	<h1>{{ h }}</h1>
+	<ul>
+		<li><a href="/list" class="{{ a1 }}">ALL</a></li>
+		<li><a href="/" class="{{ a2 }}">status_uncompleted</a></li>
+		<li><a href="/completed" class="{{ a3 }}">status_completed</a></li>
+	</ul>
+	<hr>
+	{% if db_variable[0] %}
+	<div span="right">
+	<form action="/search"	method="GET" >
+		<table class="none" id="close">
+		<tr>
+		<td></td><td></td>
+		<td><big><b>Search Reference:</b></big></td>
+		<td><select name="refer" required>
+			<option value="name">Enter name</option>
+			<option value="email">Enter email</option>
+			<option value="password">Enter password</option>
+			<option value="mobile">Enter mobile</option>
+			<option value="address">Enter address</option>
+		</select></td>
+		<td><input type="text" name="key" placeholder="Search Task" size="15" /></td>
+		<td><button type="submit">Search</button></td>
+		</tr>
+		</table>
+	</form>
+	</div>
+	<b><big>Registeration Information:</big></b>
+	<table>
+	    <tr id="row">
+	    	<th class="status">Status</th>
+	    	<th class="name">Enter name</th>
+	    	<th class="email">Enter email</th>
+	    	<th class="password">Enter password</th>
+	    	<th class="mobile">Enter mobile</th>
+	    	<th class="address">Enter address</th>
+		<th class="func1">Remove</th>
+		<th class="func2">Modify</th>
+	    </tr>
+	{% for register in db_variable %}
+		<tr class="datas">
+			<td><a href="./done?_id={{ register['_id'] }}"><input type="image" src="static/images/{{register['done']}}.png" alt="Submit ME"></a></td>
+			<td class="name">{{ register["name"] }}</td>
+			<td class="desc">{{ register["email"] }}</td>
+			<td class="date">{{ register["password"] }}</td>
+			<td class="pr">{{ register["mobile"] }}</td>
+			<td class="pr">{{ register["address"] }}</td>
+			<td class="func1"><a href="./remove?_id={{ register['_id'] }}"><button type="submit">DELETE</button></a></td>
+			<td class="func1"><a href="./update?_id={{ register['_id'] }}"><button type="submit">EDIT</button></a></td>
+		</tr>
+	{% endfor %}
+	</table>
+	{% else %}
+		<h4>No one Registeration !!</h4>
+	{% endif %}
+	<hr/>
+	<form action="/action" method="POST" enctype="multipart/form-data">
+	<table class="none">
+		<tr>
+			<p><b><big><label>Add a Task : </label></big></b></p>
+		</tr>
+		<tr>
+		<p><input type="text" name="name" placeholder="Enter name" title="please enter your name" /></p>
+		<p><input type="text" name="email" placeholder="Enter email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}" title="please enter a valid email"/></p>
+		<p><input type="text" name="password" placeholder="Enter password" /></p>
+		<p><input type="text" name="mobile" placeholder="Enter mobile" title="please enter your mobile number" /></p>
+		<p><input type="text" name="address" placeholder="Enter address" title="please enter your address" /></p>
+		<p><input type="file" name="pic" accept="image/*"></p>
+		<p><button type="submit"> Create </button></p>
+		</tr>
+	</form>
+	</table>
+	<script>
+	</script>
+</body>
+</html>
